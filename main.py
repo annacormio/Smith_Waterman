@@ -3,7 +3,7 @@ import numpy as np
 
 #INPUT SEQUENCES
 A='AAATCGTACAT'
-B='CCTGTACAA'
+B='CCTCGACAA'
 
 '''
 A= input("insert the first sequence")
@@ -78,8 +78,6 @@ a2='' #second sequence
 best_score=df.max(axis=1).max() # finding max value in dataframe
 mask = df.applymap(lambda x: True if x == best_score else False).to_numpy() #creating a mask dataframe and convert it to numpy (useful to apply the following funtion)
 indexes = np.argwhere(mask)[0]#return list of indexes of the max value (where mask ==True)
-print(r)
-print(c)
 #traceback
 while tb.iloc[r,c] != 'stop':
     #if there is a match or mismatch I align the 2 nt.
@@ -111,8 +109,8 @@ while tb.iloc[r,c] != 'stop':
 
 #OUTPUT
 print(f'score matrix \n {df}') #printing the scored matrix
-print(f'\n the score of the alignment is {score} \n') #printing score of the alignment
-print(tb) #printing the matrix with traceback indications
+print(f'\n the best score of the alignment is {best_score} \n') #printing score of the alignment
+#print(tb) #printing the matrix with traceback indications
 #since I traceBACK the first alignment i get is of the sequences displayed backward
 align=f'{a1[::-1]}\n{mid[::-1]}\n{a2[::-1]}' #using [::-1] i am reversing the strings to have the right alignment, not backward
 print(align) #printing the 2 aligned sequences

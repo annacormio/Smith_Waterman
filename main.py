@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy as np
 
 #INPUT SEQUENCES
 A='AAATCGTACAT'
@@ -62,7 +63,8 @@ for r in range (1,len(B)+1): #iterate on each row with nt.
             tb.iloc[r, c] = 'left'
         elif score == s_u_gap:
             tb.iloc[r, c] = 'up'
-        else:
+
+        elif tb.iloc[r,c]!='diag':
             tb.iloc[r,c] = 'stop'
 
 
@@ -73,10 +75,11 @@ mid='' #string of alignments
 a2='' #second sequence
 
 #setting starting point for traceback
-c=df.max(axis=1).max(axis=0).idxmax()
+best_score=df.max(axis=1).max() # finding max value in dataframe
+mask = df.applymap(lambda x: True if x == best_score else False).to_numpy() #creating a mask dataframe and convert it to numpy (useful to apply the following funtion)
+indexes = np.argwhere(mask)[0]#return list of indexes of the max value (where mask ==True)
+print(r)
 print(c)
-
-#print(r)
 #traceback
 while tb.iloc[r,c] != 'stop':
     #if there is a match or mismatch I align the 2 nt.
@@ -109,11 +112,10 @@ while tb.iloc[r,c] != 'stop':
 #OUTPUT
 print(f'score matrix \n {df}') #printing the scored matrix
 print(f'\n the score of the alignment is {score} \n') #printing score of the alignment
-#print(tb) #printing the matrix with traceback indications
+print(tb) #printing the matrix with traceback indications
 #since I traceBACK the first alignment i get is of the sequences displayed backward
 align=f'{a1[::-1]}\n{mid[::-1]}\n{a2[::-1]}' #using [::-1] i am reversing the strings to have the right alignment, not backward
 print(align) #printing the 2 aligned sequences
-
 
 
 #ATGTACATAGA

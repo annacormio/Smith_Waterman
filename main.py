@@ -2,13 +2,10 @@ import pandas as pd
 import numpy as np
 
 #INPUT SEQUENCES
-A='AAATCGTACAT'
-B='CCTCGACAA'
 
-'''
 A= input("insert the first sequence")
 B= input("insert the second sequence")
-'''
+
 
 #SCORING SCHEME
 #dafault scoring scheme
@@ -29,12 +26,12 @@ tb= pd.DataFrame(columns=list(' '+A), index=list(' '+B)) #initializing new frame
 #initialize first row to 0
 for c in range(len(A)+1): #since we added a space to build the matrix correctly we need to add 1 to the length of the string in order to reach the end
     df.iloc[0, c] =0
-    tb.iloc[0, c]=0
+    tb.iloc[0, c]='left'
 
 #initialize first column to 0
 for r in range(len(B)+1):
     df.iloc[r, 0]= 0
-    tb.iloc[r, 0] = 0
+    tb.iloc[r, 0] = 'up'
 
 
 
@@ -64,7 +61,7 @@ for r in range (1,len(B)+1): #iterate on each row with nt.
         elif score == s_u_gap:
             tb.iloc[r, c] = 'up'
 
-        elif tb.iloc[r,c]!='diag':
+        elif tb.iloc[r,c]!='diag': #if it is not computed exactly from a gap or from a mismatch/match it means that it has been reset so it is a stop for the traceback
             tb.iloc[r,c] = 'stop'
 
 
@@ -118,5 +115,3 @@ print(align) #printing the 2 aligned sequences
 
 #ATGTACATAGA
 #GTATCGTA
-
-

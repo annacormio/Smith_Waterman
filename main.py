@@ -113,5 +113,3 @@ align=f'{a1[::-1]}\n{mid[::-1]}\n{a2[::-1]}' #using [::-1] i am reversing the st
 print(align) #printing the 2 aligned sequences
 
 
-#ATGTACATAGA
-#GTATCGTA
